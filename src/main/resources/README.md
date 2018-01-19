@@ -12,6 +12,6 @@ The sample data is a small part of real taxi trajectory data in Wuhan City on 20
 | LATITUDE         | float      | car latitude              |
 | DIRECTION        | int        | car direction             |
 | SPEED            | int        | car speed                 |
-| PASSENGER_STATUS | string     | Carrying passenger or not |
+| CAR_STATUS       | string     | Carrying passenger or not |
 
-The field PASSENGER_STATUS has two values: **full and empty** , where full means the taxi carried passengers at the point while empty means not.
+The field CAR_STATUS has two values: **full and empty** , where "full" means the taxi carried passengers at the point and "empty" means not.
