@@ -21,21 +21,12 @@ import java.io.Serializable;
  * @DESCRIPTION GPS point
  * @create 2018-01-19 14:07
  **/
-public class GPSPoint implements Serializable{
+public class GPSPoint extends  Point implements Serializable{
   private static final long serialVersionUID = 1L;
 
   private int carId;
 
   private String timeStamp;
-
-  /**
-   *  point latitude
-   */
-  private double pointLat;
-  /**
-   *  point longitude
-   */
-  private double pointLon;
 
   private int carDirect;
 
@@ -59,22 +50,6 @@ public class GPSPoint implements Serializable{
 
   public void setTimeStamp(String timeStamp) {
     this.timeStamp = timeStamp;
-  }
-
-  public double getPointLat() {
-    return pointLat;
-  }
-
-  public void setPointLat(double pointLat) {
-    this.pointLat = pointLat;
-  }
-
-  public double getPointLon() {
-    return pointLon;
-  }
-
-  public void setPointLon(double pointLon) {
-    this.pointLon = pointLon;
   }
 
   public int getCarDirect() {
