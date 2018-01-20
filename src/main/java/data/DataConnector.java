@@ -1,5 +1,6 @@
 package data;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -8,7 +9,7 @@ import java.util.List;
  * @DESCRIPTION The factory of data connector
  * @create 2018-01-18 22:50
  **/
-public interface DataConnectorFactory {
+public interface DataConnector {
 
    /**
     * extract general points' trajectory
@@ -23,4 +24,5 @@ public interface DataConnectorFactory {
     * @throws IOException
     */
    List<List<GPSPoint>> getGPSTrajData() throws IOException;
+
 }

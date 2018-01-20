@@ -6,7 +6,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,9 +17,20 @@ import org.slf4j.LoggerFactory;
  * @DESCRIPTION
  * @create 2018-01-18 22:46
  **/
-public class DataConnector4File implements DataConnectorFactory {
+public class DataConnector4File implements DataConnector {
 
-  private static Logger log = LoggerFactory.getLogger(DataConnector4File.class);
+  /**
+   *  Singleton
+   */
+  private DataConnector4File(){
+  }
+  private static DataConnector4File dataConnector = null;
+  public synchronized static DataConnector4File getInstance(){
+    if(dataConnector == null){
+      dataConnector = new DataConnector4File();
+    }
+    return dataConnector;
+  }
 
   /*
     *
@@ -63,7 +73,7 @@ public class DataConnector4File implements DataConnectorFactory {
               && lastLineInfo[6].equals("empty"))
           {
             // create a new trajectory
-            curList = new ArrayList<Point>();
+            curList = new ArrayList<>();
             curList.add(point);
           }
           else if (curLineInfo[6].equals("full")
@@ -89,7 +99,6 @@ public class DataConnector4File implements DataConnectorFactory {
         count = 0;
     }
     System.out.println("SUCCESS getting trajectory list");
-    log.info("SUCCESS getting trajectory list");
     return  trajList;
   }
 
@@ -164,7 +173,6 @@ public class DataConnector4File implements DataConnectorFactory {
         count = 0;
     }
     System.out.println("SUCCESS getting GPS trajectory list");
-    log.info("SUCCESS getting GPS trajectory list");
     return  trajList;
   }
 
@@ -176,7 +184,7 @@ public class DataConnector4File implements DataConnectorFactory {
     * @param []  
     * @return file
     */  
-  private File getDataFile() {
+  public File getDataFile() {
     ClassLoader classLoader = this.getClass().getClassLoader();
     InputStream in = classLoader.getResourceAsStream("pssc.properties");
     Properties properties = new Properties();
@@ -185,7 +193,6 @@ public class DataConnector4File implements DataConnectorFactory {
     }
     catch (IOException e){
       System.out.println("ERROR loading profile：pssc.properties");
-      log.error("ERROR loading profile：pssc.properties");
       e.printStackTrace();
       System.exit(-1);
     }
@@ -197,7 +204,6 @@ public class DataConnector4File implements DataConnectorFactory {
       in.close();
     } catch (IOException e) {
       System.out.println("ERROR closing io: pssc.properties");
-      log.error("ERROR closing io: pssc.properties");
       e.printStackTrace();
     }
     return new File(url.getFile());
