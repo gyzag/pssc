@@ -25,6 +25,7 @@ public class DataConnector4File implements DataConnector {
   private DataConnector4File(){
   }
   private static DataConnector4File dataConnector = null;
+
   public synchronized static DataConnector4File getInstance(){
     if(dataConnector == null){
       dataConnector = new DataConnector4File();
