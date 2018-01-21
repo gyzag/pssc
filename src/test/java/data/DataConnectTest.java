@@ -34,7 +34,6 @@ public class DataConnectTest {
     System.out.println("END TEST");
   }
 
-
   @Test
   public void testGetTrajData() throws IOException{
     System.out.println("TEST  DATA CONNECT  get trajectory list");
@@ -56,6 +55,4 @@ public class DataConnectTest {
     System.out.println("Point1 CarSpeed: " + trajList.get(0).get(1).getCarSpeed());
     System.out.println("Point1 getCarState(): " + trajList.get(0).get(1).getCarState());
   }
-
-
 }
