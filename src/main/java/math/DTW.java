@@ -7,6 +7,16 @@ import util.CommonUtils;
 /**
  * @author GYZ
  * @DESCRIPTION Dynamic time warping
+ * From wikipedia
+ * In time series analysis, dynamic time warping (DTW) is one of the algorithms for measuring
+ * similarity between two temporal sequences, which may vary in speed. For instance, similarities
+ * in walking could be detected using DTW, even if one person was walking faster than the other,
+ * or if there were accelerations and decelerations during the course of an observation.
+ * DTW has been applied to temporal sequences of video, audio, and graphics data — indeed,
+ * any data that can be turned into a linear sequence can be analyzed with DTW.
+ * A well known application has been automatic speech recognition, to cope with different speaking speeds.
+ * Other applications include speaker recognition and online signature recognition.
+ * Also it is seen that it can be used in partial shape matching application.
  * @create 2018-01-20 17:31
  **/
 public class DTW {
