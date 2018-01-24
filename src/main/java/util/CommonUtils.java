@@ -8,6 +8,17 @@ import data.Point;
  * @create 2018-01-20 17:43
  **/
 public class CommonUtils {
+/*
+  * 
+  * calculate radian by degree
+  * @author gyz
+  * @date 2018/1/21 23:09
+  * @param [degree]  
+  * @return double  
+  */  
+  public static double getRadian(double degree) {
+    return degree * Math.PI / 180.0;
+  }
 
   /*
     *
@@ -19,31 +30,31 @@ public class CommonUtils {
     */
   public static double getSpatialDistance(Point p1, Point p2){
     // get latitude and longitude
-    double p1Lat = p1.getX();
+    double p1Lat = getRadian(p1.getX());
     double p1Lon = p1.getY();
-    double p2Lat = p2.getY();
+    double p2Lat = getRadian(p2.getX());
     double p2lon = p2.getY();
 
     double latDiff = p1Lat - p2Lat;
-    double lonDiff = p1Lon - p2lon;
+    double lonDiff = getRadian(p1Lon) - getRadian(p2lon);
 
     double dis = 2 * Math
         .asin(Math.sqrt(Math.pow(Math.sin(latDiff / 2), 2) + Math.cos(p1Lat)
             * Math.cos(p2Lat) * Math.pow(Math.sin(lonDiff / 2), 2)));
-    dis = dis * 6378.137;
+    dis = dis * 6378.137 * 1000;
     dis = Math.abs(dis);
     return dis;
   }
 
   /*
     *
-    * Calculate the plane distance between two point
+    * Calculate the euclidean  distance between two point
     * @author gyz
     * @date 2018/1/20 17:55
     * @param [p1, p2]
     * @return double
     */
-  public static double getPlaneDistance(Point p1, Point p2){
+  public static double getEucliDistance(Point p1, Point p2){
     // get latitude and longitude
     double p1X = p1.getX();
     double p1Y = p1.getY();
@@ -53,4 +64,5 @@ public class CommonUtils {
     double dis = Math.pow(Math.pow(p1X - p2X, 2) + Math.pow(p1Y - p2Y, 2), 0.5);
     return dis;
   }
+
 }
