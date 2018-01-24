@@ -1,4 +1,4 @@
-package Util;
+package util;
 
 import data.Point;
 import org.junit.After;
@@ -6,7 +6,6 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import util.CommonUtils;
 
 /**
  * @author GYZ
@@ -34,7 +33,7 @@ public class UtilTest {
 
   @Test
   public void testSpatialDistance(){
-    System.out.println("TEST  UTILS  get Spatial distance");
+    System.out.println("TEST  UTILS  getSpatialDistance");
     /**
      * Point1 represent Shanghai's latitude and longitude
      */
