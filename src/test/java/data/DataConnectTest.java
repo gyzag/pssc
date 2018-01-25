@@ -9,11 +9,12 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
- * @author
+ * @author GYZ
  * @DESCRIPTION
  * @create 2018-01-20 16:18
  **/
 public class DataConnectTest {
+
   private DataConnector dataConnector = DataConnector4File.getInstance();
 
   @BeforeClass
@@ -35,8 +36,8 @@ public class DataConnectTest {
   }
 
   @Test
-  public void testGetTrajData() throws IOException{
-    System.out.println("TEST  DATA CONNECT  get trajectory list");
+  public void testGetTrajData() throws IOException {
+    System.out.println("TEST  DATA CONNECT  getTrajData");
     List<List<Point>> trajList = dataConnector.getTrajData();
     System.out.println("List Length: " + trajList.size());
     System.out.println("Point0 X: " + trajList.get(0).get(0).getX());
@@ -44,8 +45,8 @@ public class DataConnectTest {
   }
 
   @Test
-  public void testGetGPSTrajData() throws IOException{
-    System.out.println("TEST - DATA CONNECT -  get gps trajectory list");
+  public void testGetGPSTrajData() throws IOException {
+    System.out.println("TEST - DATA CONNECT -  getGPSTrajData");
     List<List<GPSPoint>> trajList = dataConnector.getGPSTrajData();
     System.out.println("List Length: " + trajList.size());
     System.out.println("Point1 X: " + trajList.get(0).get(1).getX());
