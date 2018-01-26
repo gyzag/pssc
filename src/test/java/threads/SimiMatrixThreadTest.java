@@ -11,7 +11,9 @@ import java.util.concurrent.Executors;
 
 /**
  * @author GYZ
- * @DESCRIPTION
+ * @DESCRIPTION Test of the speedup of building similar matrix
+ * The actual operating results is depending on your hardware configuration
+ * You can set threads' number according to your Core and CPU
  * @create 2018-01-23 18:40
  **/
 public class SimiMatrixThreadTest {
@@ -73,7 +75,7 @@ public class SimiMatrixThreadTest {
 
   public static void main(String[] args) throws IOException, InterruptedException {
     System.out.println("-----START TEST-----");
-    long pTime = parallelCompSimiMatrix(8);
+    long pTime = parallelCompSimiMatrix(32);
     long sTime = serialCompSimiMatrix();
     System.out.println("Speedup = " + 1.0 *  sTime / pTime );
     System.out.println("-----END TEST-------");
