@@ -12,7 +12,6 @@ import java.util.concurrent.Executors;
  * The actual speedup is depending on your hardware configuration
  * You can set threads' number according to your Core and CPU
  * @create 2018-01-23 18:40
- * @create 2018-01-29 12:36
  **/
 public class DiagMatrixThreadTest {
 
