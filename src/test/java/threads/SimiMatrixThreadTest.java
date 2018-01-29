@@ -11,26 +11,29 @@ import java.util.concurrent.Executors;
 
 /**
  * @author GYZ
- * @DESCRIPTION Test of the speedup of building similar matrix
- * The actual operating results is depending on your hardware configuration
+ * @DESCRIPTION Test the speedup of building similar matrix
+ * The actual speedup is depending on your hardware configuration
  * You can set threads' number according to your Core and CPU
  * @create 2018-01-23 18:40
  **/
 public class SimiMatrixThreadTest {
+
   // init dataConnector
   private static DataConnector dataConnector = DataConnector4File.getInstance();
 
   /*
     * 
-    * Calculate time cost of parallel computing
+    * Calculate time cost of parallel building
+    * Similar matrix
     * @author gyz
     * @date 2018/1/24 22:15
-    * @param [the number of threads]
+    * @param [number of threads]
     * @return long  
     */  
-  public static long parallelCompSimiMatrix (int thNum) throws  IOException, InterruptedException{
+  private static long parallelBuildSimiMatrix (int thNum) throws  IOException, InterruptedException{
     System.out.println("Starting parallel computing");
     long t1 = System.currentTimeMillis();
+    // init data
     List<List<Point>> trajs = dataConnector.getTrajData();
     int len = trajs.size();
     double[][] w = new double[len][len];
@@ -43,23 +46,26 @@ public class SimiMatrixThreadTest {
           (i + 1) * len / thNum, threadSignal));
     }
     threadSignal.await();
+    cachedThreadPool.shutdown();
     long t2 = System.currentTimeMillis();
     // Ending multi threading calculating
-    System.out.println("Ending multi threading calculating");
+    System.out.println("Ending parallel calculating");
     return t2 - t1;
   }
 
   /*
     *
-    * Calculate time cost of serial computing
+    * Calculate time cost of serial building
+    * Similar matrix
     * @author gyz
     * @date 2018/1/24 22:19
     * @param []
     * @return long
     */
-  public static long serialCompSimiMatrix() throws  IOException, InterruptedException{
+  private static long serialBuildSimiMatrix() throws  IOException, InterruptedException{
     System.out.println("Starting serial computing");
     long t1 = System.currentTimeMillis();
+    // init data
     List<List<Point>> trajs = dataConnector.getTrajData();
     int len = trajs.size();
     double[][] w = new double[len][len];
@@ -75,8 +81,8 @@ public class SimiMatrixThreadTest {
 
   public static void main(String[] args) throws IOException, InterruptedException {
     System.out.println("-----START TEST-----");
-    long pTime = parallelCompSimiMatrix(32);
-    long sTime = serialCompSimiMatrix();
+    long pTime = parallelBuildSimiMatrix(32);
+    long sTime = serialBuildSimiMatrix();
     System.out.println("Speedup = " + 1.0 *  sTime / pTime );
     System.out.println("-----END TEST-------");
   }

@@ -8,54 +8,71 @@ import java.util.concurrent.Executors;
 
 /**
  * @author GYZ
- * @DESCRIPTION Test the speedup of building diagonal matrix
+ * @DESCRIPTION Test the speedup of building Lapalcian matrix
  * The actual speedup is depending on your hardware configuration
  * You can set threads' number according to your Core and CPU
- * @create 2018-01-23 18:40
- * @create 2018-01-29 12:36
+ * @create 2018-01-29 15:49
  **/
-public class DiagMatrixThreadTest {
-
+public class LaplaMatrixThreadTest {
   /**
-   *  Similar matrix (the input matrix of building diagonal matrix)
+   *  Similar matrix (the input of building Laplacian matrix)
    */
   private static double[][] W;
+
   /**
-   * The length of Similar Matrix
+   * Diagonal matrix (the input of building Laplacian matrix)
+   */
+  private static  double[] D;
+  /**
+   * The length of Laplacian Matrix
    */
   private static int LEN = 10000;
 
-  // init Similar matrix randomly
+  // init data
   static {
     Random random = new Random();
+    // init similar matrix
     W = new double[LEN][LEN];
+    D = new double[LEN];
     for(int i = 0; i < LEN; i++){
       for(int j = 0; j <= i; j++){
         W[i][j] = random.nextDouble() * 100;
         W[j][i] = W[i][j];
       }
     }
+    // init diagonal matrix
+    for (int i = 0; i < LEN; i++) {
+      for (int j = 0; j < LEN; j++) {
+        try{
+          D[i] += W[i][j];
+        }
+        catch (Exception e){
+          System.out.println(i);
+        }
+
+      }
+      D[i] = 1.0 / Math.sqrt(D[i]);
+    }
   }
 
   /*
-    * 
     * Calculate time cost of parallel building
-    * diagonal matrix
+    * Laplacian matrix
     * @author gyz
-    * @date 2018/1/29 14:25
-    * @param [numbers of thread]
+    * @date 2018/1/29 16:16
+    * @param [thNum]  
     * @return long  
     */  
-  private static long parallelBuildDiagMatrix (int thNum) throws  IOException, InterruptedException{
+  private static long parallelBuildLaplaMatrix (int thNum) throws  IOException, InterruptedException{
     System.out.println("Starting parallel computing");
     long t1 = System.currentTimeMillis();
-    double[] D = new double[LEN];
+    double[][] L = new double[LEN][LEN];
     // Threads pool
     ExecutorService cachedThreadPool = Executors.newCachedThreadPool();
     CountDownLatch threadSignal = new CountDownLatch(thNum);
     // Starting calculating
     for(int i = 0; i < thNum; i++){
-      cachedThreadPool.execute(new DiagMatrixThread(D, W, (i * LEN) / thNum,
+      cachedThreadPool.execute(new LaplaMatrixThread(L,  W, D, (i * LEN) / thNum,
           (i + 1) * LEN / thNum, threadSignal));
     }
     threadSignal.await();
@@ -67,20 +84,20 @@ public class DiagMatrixThreadTest {
   }
 
   /*
-    * 
     * Calculate time cost of serial building
-    * Diagonal matrix
+    * Laplacian matrix
     * @author gyz
-    * @date 2018/1/29 14:31
+    * @date 2018/1/29 16:17
     * @param []  
     * @return long  
     */  
-  private static long serialBuildDiagMatrix() throws IOException, InterruptedException{
+  private static long serialBuildLaplaMatrix() throws IOException, InterruptedException{
     System.out.println("Starting serial computing");
     long t1 = System.currentTimeMillis();
-    double[] D = new double[LEN];
+    double[][] L = new double[LEN][LEN];
+    // init data
     CountDownLatch singleSignal = new CountDownLatch(1);
-    Thread th = new DiagMatrixThread(D, W, 0, LEN, singleSignal);
+    Thread th = new LaplaMatrixThread(L, W, D, 0, LEN, singleSignal);
     th.start();
     singleSignal.await();
     long t2 = System.currentTimeMillis();
@@ -88,13 +105,11 @@ public class DiagMatrixThreadTest {
     return t2 - t1;
   }
 
-
   public static void main(String[] args) throws IOException, InterruptedException {
     System.out.println("-----START TEST-----");
-    long pTime = parallelBuildDiagMatrix(4);
-    long sTime = serialBuildDiagMatrix();
+    long pTime = parallelBuildLaplaMatrix(8);
+    long sTime = serialBuildLaplaMatrix();
     System.out.println("Speedup = " + 1.0 *  sTime / pTime );
     System.out.println("-----END TEST-------");
   }
-
 }
