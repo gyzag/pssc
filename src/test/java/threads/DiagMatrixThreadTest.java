@@ -40,12 +40,13 @@ public class DiagMatrixThreadTest {
   /*
     * 
     * Calculate time cost of parallel building
+    * diagonal matrix
     * @author gyz
     * @date 2018/1/29 14:25
-    * @param [thNum]  
+    * @param [numbers of thread]
     * @return long  
     */  
-  private static long parallelCompDiagMatrix (int thNum) throws  IOException, InterruptedException{
+  private static long parallelBuildDiagMatrix (int thNum) throws  IOException, InterruptedException{
     System.out.println("Starting parallel computing");
     long t1 = System.currentTimeMillis();
     double[] D = new double[LEN];
@@ -65,7 +66,16 @@ public class DiagMatrixThreadTest {
     return t2 - t1;
   }
 
-  private static long serialCompDiagMatrix() throws IOException, InterruptedException{
+  /*
+    * 
+    * Calculate time cost of serial building
+    * Diagonal matrix
+    * @author gyz
+    * @date 2018/1/29 14:31
+    * @param []  
+    * @return long  
+    */  
+  private static long serialBuildDiagMatrix() throws IOException, InterruptedException{
     System.out.println("Starting serial computing");
     long t1 = System.currentTimeMillis();
     double[] D = new double[LEN];
@@ -81,8 +91,8 @@ public class DiagMatrixThreadTest {
 
   public static void main(String[] args) throws IOException, InterruptedException {
     System.out.println("-----START TEST-----");
-    long pTime = parallelCompDiagMatrix(4);
-    long sTime = serialCompDiagMatrix();
+    long pTime = parallelBuildDiagMatrix(4);
+    long sTime = serialBuildDiagMatrix();
     System.out.println("Speedup = " + 1.0 *  sTime / pTime );
     System.out.println("-----END TEST-------");
   }
