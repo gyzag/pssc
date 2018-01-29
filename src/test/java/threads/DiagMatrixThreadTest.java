@@ -37,6 +37,14 @@ public class DiagMatrixThreadTest {
     }
   }
 
+  /*
+    * 
+    * Calculate time cost of parallel building
+    * @author gyz
+    * @date 2018/1/29 14:25
+    * @param [thNum]  
+    * @return long  
+    */  
   private static long parallelCompDiagMatrix (int thNum) throws  IOException, InterruptedException{
     System.out.println("Starting parallel computing");
     long t1 = System.currentTimeMillis();
