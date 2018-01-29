@@ -5,6 +5,7 @@ import java.io.Serializable;
 /**
  * @author gyz
  * @DESCRIPTION general point, must has X-axis  and  Y-axis
+ * As for GPS point,  X-axis means latitude, Y-axis means longitude
  * @create 2018-01-19 14:20
  **/
 public class Point implements Serializable {

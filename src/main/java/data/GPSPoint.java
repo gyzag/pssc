@@ -3,6 +3,7 @@ import java.io.Serializable;
 /**
  * @author gyz
  * @DESCRIPTION GPS point
+ * Contains Car's ID, timestamp , direct, speed and state
  * @create 2018-01-19 14:07
  **/
 public class GPSPoint extends  Point implements Serializable{
