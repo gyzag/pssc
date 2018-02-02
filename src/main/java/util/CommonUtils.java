@@ -65,4 +65,21 @@ public class CommonUtils {
     return dis;
   }
 
+  /*
+    * 
+    * Calculate the distance between two vector
+    * @author gyz
+    * @date 2018/2/2 21:42
+    * @param [x, y]  
+    * @return double  
+    */  
+  public static double getVectorDistance(double[] x, double[] y){
+    if(x.length != y.length)
+      throw new IllegalArgumentException("x and y have different length");
+    double res = 0;
+    for(int i = 0; i < x.length ; i++)
+      res += Math.pow(x[i] - y[i], 2);
+    res /= x.length;
+    return res;
+  }
 }
