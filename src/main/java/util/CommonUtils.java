@@ -66,7 +66,7 @@ public class CommonUtils {
   }
 
   /*
-    * 
+    *
     * Calculate the distance between two vector
     * @author gyz
     * @date 2018/2/2 21:42
@@ -81,5 +81,23 @@ public class CommonUtils {
       res += Math.pow(x[i] - y[i], 2);
     res /= x.length;
     return res;
+  }
+
+ /*
+   * 
+   * judge whether vector x is equal to vector y
+   * @author gyz
+   * @date 2018/2/2 22:38
+   * @param [x, y]  
+   * @return whether x is equal to y
+   */  
+  public static boolean isVectorEqual(int[] x, int[] y){
+    if(x.length != y.length)
+      return false;
+    for(int i = 0; i < x.length ; i++){
+      if(x[i] != y[i])
+        return false;
+    }
+    return true;
   }
 }
