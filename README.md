@@ -26,9 +26,12 @@ Demo data is in src/main/resources, which is a small part of real taxi trajector
 | DIRECTION        | int        | car direction             |
 | SPEED            | int        | car speed                 |
 | CAR_STATUS       | string     | Carrying passenger or not |
+
+
 You can use your own data.
 ## Demo
 Demo1 is the cluster result from Wuchang Railway Station to Optics Valley square.
 ![](https://github.com/gyzag/pssc/raw/master/img/Demo1.png)
+
 Demo2 is the cluster result from Wuchang Railway Station to Wuhan Railway Station.
 ![](https://github.com/gyzag/pssc/raw/master/img/Demo2.png)
