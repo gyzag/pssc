@@ -14,4 +14,22 @@ pssc is an algorithm that aims to mine knowledge from massive trajectory data ef
 * Use a  load  balanced  multi-threading method to parallelize the algorithm.
 * Use Lanczos method to accelerate the eigenvalue decomposition.
 
+## Data
+Demo data is in src/main/resources, which is a small part of real taxi trajectory data. The fields are shown as:
+
+
+
+| Field            | Type       | Description               |
+| ---------------- |:----------:| -------------------------:|
+| CAR_ID           | string     | taxi id                   |
+| TIME_STAMP       | string     | time stamp                |
+| LONGITUDE        | float      | car longitude             |
+| LATITUDE         | float      | car latitude              |
+| DIRECTION        | int        | car direction             |
+| SPEED            | int        | car speed                 |
+| CAR_STATUS       | string     | Carrying passenger or not |
+
+## Demo
+![FromWuchangToGuanggu](https://github.com/gyzag/pssc/tree/master/img/Demo1.png)
+
 
