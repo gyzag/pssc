@@ -30,6 +30,6 @@ Demo data is in src/main/resources, which is a small part of real taxi trajector
 | CAR_STATUS       | string     | Carrying passenger or not |
 
 ## Demo
-![](https://github.com/gyzag/pssc/img/Demo1.png)
+![](https://github.com/gyzag/pssc/raw/master/img/Demo1.png)
 
 
