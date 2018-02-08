@@ -3,6 +3,7 @@
 
 Parallel spatiotemporal spectral clustering algorithm. 
 
+[中文文档](https://github.com/gyzag/pssc/raw/master/README_CN.md)
 The paper ( Parallel Spatiotemporal Spectral Clustering With Massive Trajectory Data ) is published on ISPRS international conference and can be [viewed](http://adsabs.harvard.edu/abs/2017ISPAr42W7.1173G) and [downloaded](https://www.int-arch-photogramm-remote-sens-spatial-inf-sci.net/XLII-2-W7/1173/2017/isprs-archives-XLII-2-W7-1173-2017.pdf) online.
 
 ## Purpose
