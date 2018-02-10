@@ -4,7 +4,9 @@ import data.DataConnector;
 import data.DataConnector4File;
 import data.Point;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -38,14 +40,42 @@ public class MathTest {
     System.out.println("-----END TEST-------");
   }
 
+  /**
+   * The test of DTW
+   * @throws IOException
+   */
   @Test
   public void testDTW() throws IOException{
-    System.out.println("TEST MATH DTW  get DTW distance");
+    System.out.println("TEST MATH DTW");
     List<List<Point>> trajList = dataConnector.getTrajData();
     List<Point> traj1 = trajList.get(0);
     List<Point> traj2 = trajList.get(1);
     double dtwDis =DTW.getDTWDistance(traj1, traj2, 2);
     System.out.println("The DTW Distance is " + dtwDis);
+  }
 
+  /**
+   *  The test of KMeans
+   */
+  @Test
+  public void testKMeans(){
+    System.out.println("TEST MATH KMeans");
+    // Init test data
+    int len = 5000;
+    double[][] data = new double[len][2];
+    Random random = new Random();
+    for(int i = 0; i < len; i++){
+      data[i][0] = random.nextDouble() * 100;
+      data[i][1] = random.nextDouble() * 100;
+    }
+    // Execute Kmeans
+    KMeans kmeans = new KMeans(data, 3);
+    // Verify result
+    int[] labels = kmeans.getLabel();
+    List<Integer> nums = new ArrayList<>();
+    for(int i : labels)
+      if(!nums.contains(i))
+        nums.add(i);
+    System.out.println("The number of clusters is " + nums.size());
   }
 }
