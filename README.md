@@ -7,6 +7,7 @@ Parallel spatiotemporal spectral clustering algorithm.
 
 The paper ( Parallel Spatiotemporal Spectral Clustering With Massive Trajectory Data ) is published on ISPRS international conference and can be [viewed](http://adsabs.harvard.edu/abs/2017ISPAr42W7.1173G) and [downloaded](https://www.int-arch-photogramm-remote-sens-spatial-inf-sci.net/XLII-2-W7/1173/2017/isprs-archives-XLII-2-W7-1173-2017.pdf) online.
 
+The paper won the conference's best poster.
 ## Purpose
 pssc is an algorithm that aims to mine knowledge from massive trajectory data effectively and efficiently, it expands the time dimension on traditional spectral cluster and speeds up the algorithm by multiple  acceleration solutions.
 
