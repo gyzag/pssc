@@ -13,12 +13,12 @@ public class DiagMatrixThread extends Thread {
   /**
    * Use vector to represent the diagonal matrix
    */
-  private double[] D;
+  private double[] d;
 
   /**
    * similar matrix
    */
-  private double[][] W;
+  private double[][] w;
 
   /**
    * the start point of thread's target
@@ -34,10 +34,10 @@ public class DiagMatrixThread extends Thread {
    */
   private CountDownLatch threadsSignal;
 
-  public DiagMatrixThread(double[] D, double[][] W, int start, int end,
+  public DiagMatrixThread(double[] d, double[][] w, int start, int end,
       CountDownLatch threadsSignal) {
-    this.W = W;
-    this.D = D;
+    this.w = w;
+    this.d = d;
     this.start = start;
     this.end = end;
     this.threadsSignal = threadsSignal;
@@ -48,10 +48,10 @@ public class DiagMatrixThread extends Thread {
     try {
       int i = start;
       for (; i < end; i++) {
-        for (int j = 0; j < W.length; j++) {
-          D[i] += W[i][j];
+        for (int j = 0; j < w.length; j++) {
+          d[i] += w[i][j];
         }
-        D[i] = 1.0 / Math.sqrt(D[i]);
+        d[i] = 1.0 / Math.sqrt(d[i]);
       }
     }
     catch (Exception e){

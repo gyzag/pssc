@@ -20,7 +20,7 @@ public class SimiMatrixThread  extends Thread{
   /**
    * similar matrix
    */
-  private double[][] W;
+  private double[][] w;
 
   /**
    * the trajectory lisr
@@ -40,10 +40,10 @@ public class SimiMatrixThread  extends Thread{
    */
   private CountDownLatch threadsSignal;
 
-  public SimiMatrixThread(int sigma, double[][] W, List<List<Point>> trajs, int start, int end,
+  public SimiMatrixThread(int sigma, double[][] w, List<List<Point>> trajs, int start, int end,
       CountDownLatch threadsSignal) {
     this.sigma = sigma;
-    this.W = W;
+    this.w = w;
     this.trajs = trajs;
     this.start = start;
     this.end = end;
@@ -68,11 +68,11 @@ public class SimiMatrixThread  extends Thread{
       for(; i < end; i++){
         for(int j = 0; j <= i; j ++){
           if(j == i)
-            W[i][j] = 1;
+            w[i][j] = 1;
           else{
             // Calculate the DTW distance
-            W[i][j] = Math.exp(gamma * DTW.getDTWDistance(trajs.get(i), trajs.get(j)));
-            W[j][i] = W[i][j];
+            w[i][j] = Math.exp(gamma * DTW.getDTWDistance(trajs.get(i), trajs.get(j)));
+            w[j][i] = w[i][j];
           }
         }
       }

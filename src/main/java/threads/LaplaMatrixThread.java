@@ -12,15 +12,15 @@ public class LaplaMatrixThread extends  Thread{
   /**
    * Laplacian matrix
    */
-  private double[][] L;
+  private double[][] l;
   /**
    * similar matrix
    */
-  private double[][] W;
+  private double[][] w;
   /**
    * Use vector to represent the diagonal matrix
    */
-  private double[] D;
+  private double[] d;
   /**
    * the start point of thread's target
    */
@@ -36,9 +36,9 @@ public class LaplaMatrixThread extends  Thread{
 
   public LaplaMatrixThread(double[][] l, double[][] w, double[] d, int start, int end,
       CountDownLatch threadsSignal) {
-    L = l;
-    W = w;
-    D = d;
+    l = l;
+    w = w;
+    d = d;
     this.start = start;
     this.end = end;
     this.threadsSignal = threadsSignal;
@@ -50,8 +50,8 @@ public class LaplaMatrixThread extends  Thread{
       int i = start;
       for(; i < end; i++){
         for(int j = 0; j <= i; j ++){
-          L[i][j] = D[i] * W[i][j] * D[j];
-          L[j][i] = L[i][j];
+          l[i][j] = d[i] * w[i][j] * d[j];
+          l[j][i] = l[i][j];
         }
       }
     }
