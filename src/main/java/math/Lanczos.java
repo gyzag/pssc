@@ -19,18 +19,36 @@ import smile.math.matrix.EigenValueDecomposition;
 public class Lanczos {
 
   /**
-   * Hermitian Matrix A
+   * The Hermitian Matrix.
    */
-  private double[][] A;
+  private double[][] h;
 
   /**
-   * Number of clusters
+   * The number of clusters.
    */
   private int k;
 
-  public Lanczos(double[][] a, int k ) {
-    this.A = a;
+  /**
+   * The eigenvectors.
+   */
+  private double[][] y;
+
+  /**
+   * Constructor of Lanzos
+   * @param h the Hermitian Matrix.
+   * @param k the number of clusters.
+   */
+  public Lanczos(double[][] h, int k ) {
+    this.h = h;
     this.k = k;
+
+    DenseMatrix M = convertA2M(h);
+    // Using smile.math.matrix.Lanczos
+    EigenValueDecomposition eigen = smile.math.matrix.Lanczos.eigen(M, k);
+    y = eigen.getEigenVectors().array();
+    for (int i = 0; i < h.length; i++) {
+      Math.unitize2(y[i]);
+    }
   }
 
   /*
@@ -38,15 +56,15 @@ public class Lanczos {
     * Convert two dimensional arrays to smile.math.matrix.DenseMatrix
     * @author gyz
     * @date 2018/1/27 21:42
-    * @param [A]  
+    * @param [h]
     * @return smile.math.matrix.DenseMatrix  
     */  
-  private DenseMatrix convertA2M(double[][] A){
-    int n = A.length;
+  private DenseMatrix convertA2M(double[][] h){
+    int n = h.length;
     DenseMatrix M = new ColumnMajorMatrix(n, n);
     for (int i = 0; i < n; i++) {
       for (int j = 0; j < i; j++) {
-        double l = A[i][j];
+        double l = h[i][j];
         M.set(i, j, l);
         M.set(j, i, l);
       }
@@ -62,15 +80,7 @@ public class Lanczos {
     * @param [Array, Clusters]
     * @return eigen vectors
     */  
-  public double[][] getEigenVectors(double[][] A, int k){
-    DenseMatrix M = convertA2M(A);
-    // Using smile.math.matrix.Lanczos
-    EigenValueDecomposition eigen = smile.math.matrix.Lanczos.eigen(M, k);
-    double[][] Y = eigen.getEigenVectors().array();
-    for (int i = 0; i < A.length; i++) {
-      Math.unitize2(Y[i]);
-    }
-    // return eigen vectors
-    return Y;
+  public  double[][] getEigenVectors(){
+    return this.y;
   }
 }
