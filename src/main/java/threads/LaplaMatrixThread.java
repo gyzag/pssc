@@ -36,9 +36,9 @@ public class LaplaMatrixThread extends  Thread{
 
   public LaplaMatrixThread(double[][] l, double[][] w, double[] d, int start, int end,
       CountDownLatch threadsSignal) {
-    l = l;
-    w = w;
-    d = d;
+    this.l = l;
+    this.w = w;
+    this.d = d;
     this.start = start;
     this.end = end;
     this.threadsSignal = threadsSignal;
