@@ -45,6 +45,11 @@ public class KMeans {
    */
   private int[] label;
 
+  /**
+   *
+   * @param data the Input matrix
+   * @param k the number of clusters
+   */
   public KMeans(double[][] data, int k){
     this(data, k, 100);
   }
@@ -120,5 +125,17 @@ public class KMeans {
         newCentroids[i][j] /= num[i];
 
     centroids = newCentroids;
+  }
+
+  public int getK() {
+    return k;
+  }
+
+  public int getMaxIter() {
+    return maxIter;
+  }
+
+  public int[] getLabel() {
+    return label;
   }
 }
