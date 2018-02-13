@@ -38,15 +38,15 @@ public class SimiMatrixThreadTest {
     int len = trajs.size();
     double[][] w = new double[len][len];
     // Threads pool
-    ExecutorService cachedThreadPool = Executors.newCachedThreadPool();
+    ExecutorService threadPool = Executors.newFixedThreadPool(thNum);
     CountDownLatch threadSignal = new CountDownLatch(thNum);
     // Starting calculating
     for(int i = 0; i < thNum; i++){
-      cachedThreadPool.execute(new SimiMatrixThread(20, w, trajs, (i * len) / thNum,
+      threadPool.execute(new SimiMatrixThread(20, w, trajs, (i * len) / thNum,
           (i + 1) * len / thNum, threadSignal));
     }
     threadSignal.await();
-    cachedThreadPool.shutdown();
+    threadPool.shutdown();
     long t2 = System.currentTimeMillis();
     // Ending multi threading calculating
     System.out.println("Ending parallel calculating");

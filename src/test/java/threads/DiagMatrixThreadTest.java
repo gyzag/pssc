@@ -50,18 +50,18 @@ public class DiagMatrixThreadTest {
     long t1 = System.currentTimeMillis();
     double[] D = new double[LEN];
     // Threads pool
-    ExecutorService cachedThreadPool = Executors.newCachedThreadPool();
+    ExecutorService threadPool = Executors.newFixedThreadPool(thNum);
     CountDownLatch threadSignal = new CountDownLatch(thNum);
     // Starting calculating
     for(int i = 0; i < thNum; i++){
-      cachedThreadPool.execute(new DiagMatrixThread(D, W, (i * LEN) / thNum,
+      threadPool.execute(new DiagMatrixThread(D, W, (i * LEN) / thNum,
           (i + 1) * LEN / thNum, threadSignal));
     }
     threadSignal.await();
     long t2 = System.currentTimeMillis();
     // Ending multi threading calculating
     System.out.println("Ending parallel calculating");
-    cachedThreadPool.shutdown();
+    threadPool.shutdown();
     return t2 - t1;
   }
 

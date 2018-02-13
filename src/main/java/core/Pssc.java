@@ -73,11 +73,11 @@ public class Pssc {
    * Constructor of Parallel Spatiotemporal Spectral Cluster
    * @param k the cluster labels of data
    * @param data the input trajectory data
-   * @param sigma the width of Gaussian kernel
+   * @param thNum the number of threads
    * @throws InterruptedException
    */
-  public Pssc(int k , List<List<Point>> data, int sigma) throws InterruptedException{
-    this(k, data, 12, sigma);
+  public Pssc(int k , List<List<Point>> data, int thNum) throws InterruptedException{
+    this(k, data, 12, thNum);
   }
 
   /**
@@ -110,25 +110,25 @@ public class Pssc {
     // laplacian matrix
     double[][] l = new double[n][n];
     // Thread pool
-    ExecutorService cachedThreadPool = Executors.newCachedThreadPool();
+    ExecutorService threadPool = Executors.newFixedThreadPool(thNum);
     System.out.println("----------Start building similar matrix-----------");
     CountDownLatch latch1 = new CountDownLatch(thNum);
     for(int i = 0; i < thNum; i++){
-      cachedThreadPool.execute(new SimiMatrixThread(sigma, m, data, (i * n) / thNum,
+      threadPool.execute(new SimiMatrixThread(sigma, m, data, (i * n) / thNum,
           (i + 1) * n / thNum, latch1));
     }
     latch1.await();
     System.out.println("----------Start building diagonal matrix-----------");
     CountDownLatch latch2 = new CountDownLatch(thNum);
     for(int i = 0; i < thNum; i++){
-      cachedThreadPool.execute(new DiagMatrixThread(d, m, (i * n) / thNum,
+      threadPool.execute(new DiagMatrixThread(d, m, (i * n) / thNum,
           (i + 1) * n / thNum, latch2));
     }
     latch2.await();
     System.out.println("----------Start building laplacian matrix-----------");
     CountDownLatch latch3 = new CountDownLatch(thNum);
     for(int i = 0; i < thNum; i++){
-      cachedThreadPool.execute(new LaplaMatrixThread(l,  m, d, (i * n) / thNum,
+      threadPool.execute(new LaplaMatrixThread(l,  m, d, (i * n) / thNum,
           (i + 1) * n / thNum, latch3));
     }
     latch3.await();
@@ -138,5 +138,6 @@ public class Pssc {
     System.out.println("----------Start KMeans cluster-----------");
     KMeans kmeans = new KMeans(eigVec, k);
     this.labels = kmeans.getLabel();
+    threadPool.shutdown();
   }
 }
