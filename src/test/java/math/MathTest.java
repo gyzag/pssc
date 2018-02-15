@@ -69,13 +69,15 @@ public class MathTest {
       data[i][1] = random.nextDouble() * 100;
     }
     // Execute Kmeans
-    KMeans kmeans = new KMeans(data, 3);
+    int k = 3;
+    KMeans kmeans = new KMeans(data, k);
     // Verify result
     int[] labels = kmeans.getLabel();
     List<Integer> nums = new ArrayList<>();
     for(int i : labels)
       if(!nums.contains(i))
         nums.add(i);
-    System.out.println("The number of clusters is " + nums.size());
+    System.out.println("Correct answer is "  + k );
+    System.out.println( "My answer is "+ nums.size());
   }
 }
