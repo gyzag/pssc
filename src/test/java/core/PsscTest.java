@@ -20,11 +20,11 @@ public class PsscTest {
 
   public static void main(String[] args) throws IOException, InterruptedException {
     System.out.println("----------START TEST----------");
+    long t1 = System.currentTimeMillis();
     // init data
     List<List<Point>> trajs = dataConnector.getTrajData();
     int k = 4;
-    Pssc pssc = new Pssc(k, trajs);
-
+    Pssc pssc = new Pssc(k, trajs, 8);
     int[] labels = pssc.getLabels();
     List<Integer> nums = new ArrayList<>();
     for(int i : labels)
@@ -33,6 +33,7 @@ public class PsscTest {
     System.out.println("Correct answer is "  + k );
     System.out.println( "My answer is "+ nums.size());
     System.out.println("----------END TEST----------");
+    System.out.println(System.currentTimeMillis() - t1);
   }
 
 
