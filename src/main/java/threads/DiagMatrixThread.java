@@ -16,7 +16,7 @@ public class DiagMatrixThread extends Thread {
   private double[] d;
 
   /**
-   * similar matrix
+   * The similar matrix
    */
   private double[][] w;
 
@@ -34,6 +34,14 @@ public class DiagMatrixThread extends Thread {
    */
   private CountDownLatch threadsSignal;
 
+  /**
+   * Constructor of DiagMatrixThread
+   * @param d the diagonal matrix
+   * @param w similar matrix
+   * @param start the start point of thread's target
+   * @param end the end point of thread's target
+   * @param threadsSignal countDownLatch
+   */
   public DiagMatrixThread(double[] d, double[][] w, int start, int end,
       CountDownLatch threadsSignal) {
     this.w = w;

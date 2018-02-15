@@ -10,11 +10,11 @@ import java.util.concurrent.CountDownLatch;
 public class LaplaMatrixThread extends  Thread{
 
   /**
-   * Laplacian matrix
+   * The Laplacian matrix
    */
   private double[][] l;
   /**
-   * similar matrix
+   * The similar matrix
    */
   private double[][] w;
   /**
@@ -22,11 +22,11 @@ public class LaplaMatrixThread extends  Thread{
    */
   private double[] d;
   /**
-   * the start point of thread's target
+   * The start point of thread's target
    */
   private int start;
   /**
-   * the end point of thread's target
+   * The end point of thread's target
    */
   private int end;
   /**
@@ -34,6 +34,15 @@ public class LaplaMatrixThread extends  Thread{
    */
   private CountDownLatch threadsSignal;
 
+  /**
+   * Constructor of LaplaMatrixThread
+   * @param l the Laplacian matrix
+   * @param w the similar matrix
+   * @param d the diagonal matrix
+   * @param start the start point of thread's target
+   * @param end the end point of thread's target
+   * @param threadsSignal countDownLatch
+   */
   public LaplaMatrixThread(double[][] l, double[][] w, double[] d, int start, int end,
       CountDownLatch threadsSignal) {
     this.l = l;

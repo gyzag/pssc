@@ -13,26 +13,26 @@ import math.DTW;
 public class SimiMatrixThread  extends Thread{
 
   /**
-   * Gauss kernel function's width
+   * The Gauss kernel function's width
    */
   private int sigma;
 
   /**
-   * similar matrix
+   * The similar matrix
    */
   private double[][] w;
 
   /**
-   * the trajectory lisr
+   * The trajectory list
    */
   private  List<List<Point>> trajs;
 
   /**
-   * the start point of thread's target
+   * The start point of thread's target
    */
   private int start;
   /**
-   * the end point of thread's target
+   * The end point of thread's target
    */
   private int end;
   /**
@@ -40,6 +40,15 @@ public class SimiMatrixThread  extends Thread{
    */
   private CountDownLatch threadsSignal;
 
+  /**
+   * Constructor of LaplaMatrixThread
+   * @param sigma the Gauss kernel function's width
+   * @param w the similar matrix
+   * @param trajs the trajectory list
+   * @param start the start point of thread's target
+   * @param end the end point of thread's target
+   * @param threadsSignal countDownLatch
+   */
   public SimiMatrixThread(int sigma, double[][] w, List<List<Point>> trajs, int start, int end,
       CountDownLatch threadsSignal) {
     this.sigma = sigma;
@@ -49,8 +58,6 @@ public class SimiMatrixThread  extends Thread{
     this.end = end;
     this.threadsSignal = threadsSignal;
   }
-
-
   /*
     * 
     * Each thread is responsible for
