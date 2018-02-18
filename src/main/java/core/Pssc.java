@@ -7,6 +7,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import math.KMeans;
 import math.Lanczos;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import threads.DiagMatrixThread;
 import threads.LaplaMatrixThread;
 import threads.SimiMatrixThread;
@@ -17,6 +19,11 @@ import threads.SimiMatrixThread;
  * @create 2018-01-23 17:48
  **/
 public class Pssc {
+
+  /**
+   * log
+   */
+  private static final Logger log = LoggerFactory.getLogger(Pssc.class);
 
   /**
    * The number of clusters.
@@ -112,12 +119,18 @@ public class Pssc {
     // Thread pool
     ExecutorService threadPool = Executors.newFixedThreadPool(thNum);
     System.out.println("----------Start building similar matrix-----------");
-    CountDownLatch latch1 = new CountDownLatch(thNum);
-    for(int i = 0; i < thNum; i++){
-      threadPool.execute(new SimiMatrixThread(sigma, m, data, (i * n) / thNum,
-          (i + 1) * n / thNum, latch1));
+    try {
+      CountDownLatch latch1 = new CountDownLatch(thNum);
+      for(int i = 0; i < thNum; i++){
+        threadPool.execute(new SimiMatrixThread(sigma, m, data, (i * n) / thNum,
+            (i + 1) * n / thNum, latch1));
+      }
+      latch1.await();
     }
-    latch1.await();
+    catch (Exception ex){
+      log.error("Failed to building similar matrix ", ex);
+    }
+
     System.out.println("----------Start building diagonal matrix-----------");
     CountDownLatch latch2 = new CountDownLatch(thNum);
     for(int i = 0; i < thNum; i++){
