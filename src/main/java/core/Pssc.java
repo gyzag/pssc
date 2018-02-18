@@ -21,7 +21,7 @@ import threads.SimiMatrixThread;
 public class Pssc {
 
   /**
-   * log
+   * Log.
    */
   private static final Logger log = LoggerFactory.getLogger(Pssc.class);
 
@@ -118,39 +118,77 @@ public class Pssc {
     double[][] l = new double[n][n];
     // Thread pool
     ExecutorService threadPool = Executors.newFixedThreadPool(thNum);
-    System.out.println("----------Start building similar matrix-----------");
-    try {
-      CountDownLatch latch1 = new CountDownLatch(thNum);
-      for(int i = 0; i < thNum; i++){
-        threadPool.execute(new SimiMatrixThread(sigma, m, data, (i * n) / thNum,
-            (i + 1) * n / thNum, latch1));
+    try{
+      System.out.println("----------Start building similar matrix-----------");
+      try {
+        CountDownLatch latch1 = new CountDownLatch(thNum);
+        for(int i = 0; i < thNum; i++){
+          threadPool.execute(new SimiMatrixThread(sigma, m, data, (i * n) / thNum,
+              (i + 1) * n / thNum, latch1));
+        }
+        latch1.await();
       }
-      latch1.await();
-    }
-    catch (Exception ex){
-      log.error("Failed to building similar matrix ", ex);
-    }
+      catch (Exception ex){
+        log.error("Failed to build similar matrix ", ex);
+        ex.printStackTrace();
+      }
+      log.info("Succeed building similar matrix");
 
-    System.out.println("----------Start building diagonal matrix-----------");
-    CountDownLatch latch2 = new CountDownLatch(thNum);
-    for(int i = 0; i < thNum; i++){
-      threadPool.execute(new DiagMatrixThread(d, m, (i * n) / thNum,
-          (i + 1) * n / thNum, latch2));
+      System.out.println("----------Start building diagonal matrix-----------");
+      try{
+        CountDownLatch latch2 = new CountDownLatch(thNum);
+        for(int i = 0; i < thNum; i++){
+          threadPool.execute(new DiagMatrixThread(d, m, (i * n) / thNum,
+              (i + 1) * n / thNum, latch2));
+        }
+        latch2.await();
+      }
+      catch (Exception ex){
+        log.error("Failed to build diagonal matrix ", ex);
+        ex.printStackTrace();
+      }
+      log.info("Succeed building diagonal matrix");
+
+      System.out.println("----------Start building laplacian matrix-----------");
+      try{
+        CountDownLatch latch3 = new CountDownLatch(thNum);
+        for(int i = 0; i < thNum; i++){
+          threadPool.execute(new LaplaMatrixThread(l,  m, d, (i * n) / thNum,
+              (i + 1) * n / thNum, latch3));
+        }
+        latch3.await();
+      }
+      catch (Exception ex){
+        log.error("Failed to build laplacian matrix ", ex);
+        ex.printStackTrace();
+      }
+      log.info("Succeed building laplacian matrix");
+      double[][] eigVec = new double[k][n];
+      try{
+        System.out.println("----------Start calculating eigenvectors-----------");
+        Lanczos lanczos = new Lanczos(l, k);
+        eigVec = lanczos.getEigenVectors();
+      }
+      catch (Exception ex){
+        log.error("Failed to calculate eigenvectors ", ex);
+        ex.printStackTrace();
+      }
+      log.info("Succeed calculating eigenvectors");
+
+      System.out.println("----------Start KMeans cluster-----------");
+      try{
+        KMeans kmeans = new KMeans(eigVec, k);
+        this.labels = kmeans.getLabel();
+      }
+      catch (Exception ex){
+        log.error("Failed to Kmeans cluster ", ex);
+        ex.printStackTrace();
+      }
+      log.info("Succeed Kmeans clustering");
+
     }
-    latch2.await();
-    System.out.println("----------Start building laplacian matrix-----------");
-    CountDownLatch latch3 = new CountDownLatch(thNum);
-    for(int i = 0; i < thNum; i++){
-      threadPool.execute(new LaplaMatrixThread(l,  m, d, (i * n) / thNum,
-          (i + 1) * n / thNum, latch3));
+    finally {
+      threadPool.shutdown();
     }
-    latch3.await();
-    System.out.println("----------Start calculating eigenvectors-----------");
-    Lanczos lanczos = new Lanczos(l, k);
-    double[][] eigVec = lanczos.getEigenVectors();
-    System.out.println("----------Start KMeans cluster-----------");
-    KMeans kmeans = new KMeans(eigVec, k);
-    this.labels = kmeans.getLabel();
-    threadPool.shutdown();
   }
 }
