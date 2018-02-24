@@ -1,7 +1,10 @@
 package math;
 
+import data.DataConnector4File;
 import data.Point;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import util.CommonUtils;
 
 /**
@@ -21,6 +24,10 @@ import util.CommonUtils;
  **/
 public class DTW {
 
+  /**
+   * log
+   */
+  private static final Logger log = LoggerFactory.getLogger(DTW.class);
 /*
   * get DTW distance using dp
   * where w is set as default (2)
