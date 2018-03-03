@@ -163,7 +163,7 @@ public class Pssc {
         ex.printStackTrace();
       }
       log.info("Succeed building laplacian matrix");
-      double[][] eigVec = new double[k][n];
+      double[][] eigVec = null;
       try{
         System.out.println("----------Start calculating eigenvectors-----------");
         Lanczos lanczos = new Lanczos(l, k);
